@@ -1,0 +1,432 @@
+.powered-by-icon {
+    position: absolute;
+    top: 237px;
+    left: 707px;
+    width: 92.59px;
+    height: 15.98px;
+  }
+  .address-icon,
+  .busilyze-icon {
+    position: absolute;
+    top: 261.16px;
+    left: 688.72px;
+    width: 128.74px;
+    height: 50.22px;
+  }
+  
+
+  .address-icon {
+    top: 114px;
+    left: 140px;
+    width: 386.92px;
+    height: 185.31px;
+  }
+  .email,
+  .email1,
+  .icon {
+    position: absolute;
+    top: 5%;
+    left: 0.67%;
+  }
+  .email,
+  .icon {
+    top: 2px;
+    left: 37px;
+    width: 149px;
+    height: 20px;
+  }
+  .icon {
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+  }
+  .email-parent {
+    position: relative;
+    width: 186px;
+    height: 24px;
+  }
+  .span {
+    size: 20px;
+    text-decoration: underline;
+  }
+  .a {
+    color: inherit;
+  }
+  .div,
+  .phone-number {
+    position: absolute;
+    top: 5%;
+    left: 0;
+  }
+  .phone-number {
+    top: 2px;
+    left: 37px;
+    width: 139px;
+    height: 20px;
+  }
+  .icon-parent {
+    position: relative;
+    width: 176px;
+    height: 24px;
+    color: inherit;
+  }
+  .icon2 {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .frame-parent,
+  .social-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 21px;
+  }
+  .frame-parent {
+    position: absolute;
+    top: 100px;
+    left: 1140px;
+    flex-direction: column;
+    align-items: center;
+    gap: 42px;
+  }
+  .puma-logo-png-33-1-icon {
+    position: absolute;
+    top: 29px;
+    left: 140px;
+    width: 110px;
+    height: 56.86px;
+    object-fit: cover;
+  }
+  .footer,
+  .surya-child {
+    position: absolute;
+    background-color: var(--color-darkslateblue-100);
+  }
+  .footer {
+    top: 1957px;
+    left: -1px;
+    width: 1521px;
+    height: 369px;
+    overflow: hidden;
+    color: var(--color-white);
+    font-family: var(--font-roboto);
+  }
+  .surya-child {
+    top: 44px;
+    left: 0;
+    width: 1520px;
+    height: 82px;
+  }
+  .surya-inner,
+  .surya-item {
+    position: absolute;
+    top: 212px;
+    border-radius: var(--br-3xs);
+    border: 1px solid var(--color-darkslateblue-100);
+    box-sizing: border-box;
+    height: 350px;
+  }
+  .surya-item {
+    left: 760px;
+    background-color: var(--color-gainsboro);
+    width: 700px;
+  }
+  .surya-inner {
+    left: 121px;
+    width: 593px;
+  }
+  .vector-icon {
+    position: relative;
+    width: 23.19px;
+    height: 14px;
+  }
+  .span1 {
+    color: var(--color-gray);
+  }
+  .am-container {
+    position: relative;
+    font-weight: 500;
+  }
+  .frame-div,
+  .vector-container,
+  .vector-group,
+  .vector-parent,
+  .vector-parent1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 593px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-8xl);
+  }
+  .frame-div,
+  .vector-container,
+  .vector-group,
+  .vector-parent1 {
+    top: 53px;
+  }
+  .frame-div,
+  .vector-container,
+  .vector-parent1 {
+    top: 106px;
+  }
+  .frame-div,
+  .vector-parent1 {
+    top: 159px;
+  }
+  .vector-parent1 {
+    top: 212px;
+  }
+  .frame-group {
+    position: absolute;
+    top: 243px;
+    left: 121px;
+    width: 593px;
+    height: 242px;
+  }
+  .span4 {
+    font-weight: 500;
+    font-family: var(--font-poppins);
+  }
+  .surya-musunuri {
+    color: var(--color-white);
+    font-size: var(--font-size-3xl);
+  }
+  .name-surya-container {
+    position: relative;
+  }
+  .span5 {
+    font-size: var(--font-size-5xl);
+  }
+  .span10 {
+    font-size: var(--font-size-xl);
+    font-weight: 500;
+    font-family: var(--font-poppins);
+  }
+  .name-surya-musunuri-parent {
+    position: absolute;
+    top: 66px;
+    left: 0;
+    width: 1520px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 100px;
+    font-size: var(--font-size-7xl);
+    color: var(--color-darkorchid);
+  }
+  .am-video,
+  .videos {
+    position: absolute;
+    top: 159px;
+    left: 121px;
+    font-weight: 500;
+  }
+  .am-video {
+    top: 573px;
+    left: 760px;
+    font-size: var(--font-size-sm);
+  }
+  .mins {
+    position: relative;
+    font-size: var(--font-size-5xl);
+    font-weight: 600;
+    color: #55286f;
+  }
+  
+  .made-sale-in-parent,
+  .performance-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .performance-parent {
+    gap: 5px;
+  }
+  .group-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 30px;
+    background-color: #ba1465;
+    width: 244px;
+    height: 59px;
+  }
+  .detail-analysis {
+    position: absolute;
+    top: 17px;
+    left: 63px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-poppins);
+    color: var(--color-gainsboro);
+    text-align: left;
+  }
+  .rectangle-parent {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    position: relative;
+    width: 244px;
+    height: 59px;
+  }
+  .frame-container {
+    position: absolute;
+    top: 628px;
+    left: 759px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 99px;
+  }
+  .surya {
+    position: absolute;
+    top: 1208px;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-antiquewhite);
+    width: 1520px;
+    height: 749px;
+    overflow: hidden;
+    font-size: var(--font-size-xl);
+  }
+  .curosel-icon {
+    position: absolute;
+    top: 187px;
+    left: 88px;
+    border-radius: 15px;
+    width: 1344px;
+    height: 550px;
+  }
+  .employees {
+    position: absolute;
+    top: 782px;
+    left: 660px;
+    font-size: 36px;
+    font-weight: 500;
+  }
+  .murali,
+  .pavan,
+  .surya1 {
+    position: absolute;
+    top: 1160px;
+    left: 182px;
+  }
+  .murali,
+  .pavan {
+    left: 454px;
+  }
+  .murali {
+    left: 722px;
+  }
+  .curosel,
+  .manikanta,
+  .sandeep {
+    position: absolute;
+    top: 1160px;
+    left: 968px;
+  }
+  .curosel,
+  .sandeep {
+    left: 1249px;
+  }
+  .curosel {
+    top: 434px;
+    left: 663px;
+    font-size: 64px;
+  }
+  .mani-icon,
+  .surya-icon {
+    position: absolute;
+    top: 818px;
+    left: 889px;
+    width: 266px;
+    height: 331px;
+    object-fit: cover;
+  }
+  .surya-icon {
+    top: 809px;
+    left: 114px;
+    width: 239px;
+    height: 340px;
+  }
+  .manoj-icon,
+  .pavan-icon,
+  .sandeep-icon {
+    position: absolute;
+    top: 782px;
+    left: 592px;
+    width: 353px;
+    height: 367px;
+    object-fit: cover;
+  }
+  .pavan-icon,
+  .sandeep-icon {
+    top: 840px;
+    left: 1200px;
+    width: 207px;
+    height: 309px;
+  }
+  .pavan-icon {
+    top: 836px;
+    left: 385px;
+    width: 240px;
+    height: 313px;
+  }
+  .navbar-icon {
+    position: absolute;
+    top: calc(50% - 555px);
+    left: 0;
+    width: 1520px;
+    height: 83px;
+  }
+  .puma-logo-png-33-2-icon {
+    position: absolute;
+    top: 62px;
+    left: 88px;
+    width: 110px;
+    height: 57px;
+    object-fit: cover;
+  }
+  .code,
+  .hero {
+    overflow: hidden;
+  }
+  .hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1520px;
+    height: 1208px;
+    font-size: var(--font-size-5xl);
+  }
+  .code {
+    position: relative;
+    background-color: var(--color-antiquewhite);
+    width: 100%;
+    height: 2326px;
+    text-align: left;
+    font-size: var(--font-size-sm);
+    color: var(--color-black);
+    font-family: var(--font-poppins);
+  }
+  
+
+  .surya1:hover, .pavan:hover, .murali:hover, .manikanta:hover, .sandeep:hover {
+    cursor: pointer;
+  }
+  

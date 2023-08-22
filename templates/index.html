@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./static/global.css" />
+    <link rel="stylesheet" href="./static/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Pacifico:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Podkova:wght@400&display=swap"
+    />
+  </head>
+  <body>
+    <div class="after-login-1520">
+      <div class="rectangle-parent">
+        <div class="group-child"></div>
+        <div id="dropZone" class="drop-zone drag-drop-parent">
+          <div class="drag-drop">Drag & Drop</div>
+          <div class="or-select-files">or select files from device</div>
+          <div class="max-2gb">max. 2GB</div>
+          <img
+            class="upload-cloud-icon"
+            alt=""
+            src="./static/uploadcloud.svg"
+          />
+        </div>
+      </div>
+      <form action="/upload_video" method="post" enctype="multipart/form-data">
+        <input type="file" name="video_file"><br><br>
+        <input type="submit" value="Upload">
+     </form>
+
+      <div class="upload-the-conversation">
+        Upload the conversation video and we’ll give all of these :
+      </div>
+      <img class="vector-icon" alt="" src="./static/vector.svg" />
+
+      <div class="group-parent">
+        <div class="rectangle-group">
+          <div class="group-item"></div>
+          <div class="transcription">Transcription</div>
+          <div class="automatically-convert-your-container">
+            <p class="automatically-convert-your">Automatically convert your</p>
+            <p class="automatically-convert-your">audio/video into text</p>
+          </div>
+        </div>
+        <div class="rectangle-group">
+          <div class="group-inner"></div>
+          <div class="summarization">Summarization</div>
+          <div class="generates-summery-for">
+            Generates summary for whole conversation
+          </div>
+        </div>
+        <div class="vector-parent">
+          <img class="rectangle-icon" alt="" src="./static/rectangle-8.svg" />
+
+          <div class="sentiment-analysis">Sentiment Analysis</div>
+          <div class="generates-summery-for">
+            Generates summary for whole conversation
+          </div>
+        </div>
+        <div class="vector-group">
+          <img class="group-child1" alt="" src="./static/rectangle-9.svg" />
+
+          <div class="speaker-labels">Speaker labels</div>
+          <div class="detects-the-number-container">
+            <p class="automatically-convert-your">Generates the conversation</p>
+            <p class="automatically-convert-your">
+              in a story manner
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="busilyze">Busilyze</div>
+    </div>
+    <div class="result">
+    <h2>Predicted Topic :</h2> 
+    <p>{{ predicted_topic }}</p>
+    <h2>Conversation :</h2>
+    <p class="passage">
+        <ul>
+          {% for line in passage %}
+          <li class="passage">{{ line }}</li>
+          {% endfor %}
+        </ul>
+    </p>
+    <h2>Summary of the conversation :</h2>
+    <p>{{response}}</p>
+    <div>{{fig1}}</div>
+    <div>{{fig2}}</div>
+  </div>
+  </body>
+</html>

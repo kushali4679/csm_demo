@@ -1,0 +1,11 @@
+fastapi
+jinja2
+uvicorn
+python-multipart
+tensorflow
+matplotlib
+urllib3
+opencv-python
+transformers
+torch
+SpeechRecognition

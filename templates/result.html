@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./static/globalres1.css" />
+    <link rel="stylesheet" href="./static/result1.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Pacifico:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    />
+  </head>
+  <body>
+
+    <div class="ee">
+
+      <img class="ee-item" alt="" src="./static/frame-28990.svg" />
+      <h3 class="man">Name of the Salesman: {{text_name}}</h3> 
+      <div class="trsu"> 
+       <div class="transcript"><h3>Transcript :</h3>
+            <p class="passage">
+              <ul>
+                {% for line in passage %}
+                <li class="passage">{{ line }}</li>
+                {% endfor %}
+              </ul>
+          </p>
+        </div>
+        <div class="summarization">
+          <h3>Summary of the conversation :</h3>
+          <p>{{response}}</p>
+          <div class="topic-detection"><h3>Topic Detection :</h3>
+            <p class="topic1">Here the conversation is about {{ predicted_topic }}</p>
+          </div>
+          
+        </div>
+      </div>  
+      <!-- <div class="sentimental-analysis">Sentimental Analysis</div> -->
+      <div>{{text_file}}</div>
+      
+    </div>
+    
+    <div class="fig">
+      <img class="fig1"src="/static/figure1.png" alt="Figure">
+      <img class="fig2" src="/static/figure2.png" alt="Figure">
+    </div>
+    
+  </body>
+</html>

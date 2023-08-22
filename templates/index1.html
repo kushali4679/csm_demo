@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./static/global1.css" />
+    <link rel="stylesheet" href="./static/index1.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    />
+    <style>
+      * {box-sizing: border-box;}
+      body {font-family: Verdana, sans-serif;}
+      .mySlides {display: none;}
+      img {vertical-align: middle;}
+      
+
+
+      .surya1:hover, .pavan:hover, .murali:hover, .manikanta:hover, .sandeep:hover {
+        cursor: pointer;
+      }
+
+      .name-surya-musunuri-parent .surya-musunuri img {
+      max-width: 100%;
+      max-height: 100px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+      /* Slideshow container */
+      .slideshow-container {
+        max-width: 1000px;
+        position: relative;
+        margin: auto;
+      }
+      
+      /* Caption text */
+      .text {
+        color: #f2f2f2;
+        font-size: 15px;
+        padding: 8px 12px;
+        position: absolute;
+        bottom: 8px;
+        width: 100%;
+        text-align: center;
+      }
+      
+      /* Number text (1/3 etc) */
+      .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+      }
+      
+      /* The dots/bullets/indicators */
+      .dot {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+      }
+      
+      .active {
+        background-color: #717171;
+      }
+      
+      /* Fading animation */
+      .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+      }
+      
+      @keyframes fade {
+        from {opacity: .4} 
+        to {opacity: 1}
+      }
+      
+      /* On smaller screens, decrease text size */
+      @media only screen and (max-width: 300px) {
+        .text {font-size: 11px}
+      }
+
+      .sub{
+        border-radius: 25px;
+        width:95px;
+        height:35px;
+        color:white;
+        background-color:#4c2165 ;
+      }
+      </style>
+        
+  </head>
+  <body>
+    <div class="code">
+      <div class="footer">
+        <img class="powered-by-icon" alt="" src="/static//powered-by.svg" />
+        
+        <img class="busilyze-icon" alt="" src="./static/CloudKarya1.png" />
+
+        <img class="address-icon" alt="" src="./static/Group 10.png" />
+
+        <div class="frame-parent">
+          <div class="email-parent">
+            <div class="email">
+              <div class="email1">support@cloudkarya.com</div>
+            </div>
+            <img class="icon" alt="" src="./static/icon.svg" />
+          </div>
+          <div class="icon-parent">
+            <img class="icon" alt="" src="./static/icon1.svg" />
+
+            <div class="phone-number">
+              <div class="div">
+                <a
+                  class="a"
+                  href="https://www.google.com/search?client=opera&q=puma+store+in+visakhapatnam+waltair+uphills&sourceid=opera&ie=UTF-8&oe=UTF-8#"
+                  target="_blank"
+                >
+                  <span class="span">0891 663 7995</span> </a>
+              </div>
+            </div>
+          </div>
+          <div class="social-icons">
+            <img class="icon2" alt="" src="./static/icon2.svg" />
+
+            <img class="icon2" alt="" src="./static/icon3.svg" />
+
+            <img class="icon2" alt="" src="./static/icon4.svg" />
+
+            <img class="icon2" alt="" src="./static/icon5.svg" />
+          </div>
+        </div>
+        <img
+          class="puma-logo-png-33-1-icon"
+          alt=""
+          src="./static/pumalogopng33-1@2x.png"
+        />
+      </div>
+      <div class="surya">
+        <div class="surya-child"></div>
+        <!-- <iframe
+          class="surya-item"
+          id="video"
+          src="https://www.youtube.com/embed/UNFVFTqHqtI"
+          frameborder="0"
+          allowfullscreen
+        >
+        </iframe> -->
+
+        <iframe class="surya-item" id="video"  src="https://drive.google.com/file/d/1zjpSmTW80e_abW--uS-lhHRNhoLqObtp/preview" width="640" height="480" allow="autoplay"></iframe>
+        <div class="surya-inner"></div>
+        <div class="frame-group">
+          <div class="vector-parent">
+            <img class="vector-icon" alt="" src="./static/vector.svg" />
+
+            <div class="am-container">
+              <a href="#" id="sv" onclick="showVideo()">05-06-2023  09:30 AM  ★★★★</a>
+              <!-- <span>05-06-2023 09:30 am ★ ★ ★ ★ </span> -->
+              <!-- <span class="span1">★</span> -->
+            </div>
+          </div>
+          <div class="vector-group">
+            <img class="vector-icon" alt="" src="./static/vector1.svg" />
+            <a href="#" id="sv1" onclick="showVideo1()">06-06-2023 10:00  AM  ★★★★★</a>
+            <!-- <div class="am-container">06-06-2023 10:00 am ★ ★ ★ ★ ★</div> -->
+          </div>
+          <div class="vector-container">
+            <img class="vector-icon" alt="" src="./static/vector1.svg" />
+            <a href="#" id="sv2" onclick="showVideo2()">07-06-2023  09:30 AM  ★★★★</a>
+            <!-- <div class="am-container">07-06-2023 09:30 am ★ ★ ★ ★ ★</div> -->
+          </div>
+          <div class="frame-div">
+            <img class="vector-icon" alt="" src="./static/vector.svg" />
+
+            <div class="am-container">
+              <a href="#" id="sv3" onclick="showVideo3()">08-06-2023  09:30 AM   ★★★★★</a>
+             
+            </div>
+          </div>
+          <div class="vector-parent1">
+            <img class="vector-icon" alt="" src="./static/vector1.svg" />
+
+            <div class="am-container"><a onclick="showVideo4()" id="myLink" href="#">09-06-2023  11:30 AM  ★★★★★</a></div>
+          </div>
+        </div>
+        <div class="name-surya-musunuri-parent">
+          <div class="name-surya-container">
+            <span>
+              <b>Name :</b>
+            </span>
+            <span class="surya-musunuri">
+              <span>
+                <span class="span4"> </span>
+              </span>
+              <b id="Empname">Surya Kumar</b>
+            </span>
+          </div>
+          <b class="name-surya-container">
+            <span>Hired :</span>
+            <span class="surya-musunuri">
+              <span class="span5"> </span>
+              <span id="Emphired">Jan 2023</span>
+            </span>
+          </b>
+          <b class="name-surya-container">
+            <span>
+              <span>Average Rating</span>
+              <span class="surya-musunuri"> :</span>
+            </span>
+            <span class="surya-musunuri">
+              <span class="span5"> </span>
+              <span id="Emprating">4.5 </span>
+            </span>
+          </b>
+          <div class="name-surya-container">
+            <b>Average Sale :</b>
+            <span class="surya-musunuri">
+              <span class="span10"> </span>
+              <b id="Empsale">450/-</b>
+            </span>
+          </div>
+        </div>
+ 
+        <div class="am-video" id="time">05-06-2023 09:30 am</div>
+        <div class="frame-container">
+          <div class="made-sale-in-parent">
+            <div class="am-container">Made sale in</div>
+            <div class="mins" id="mins">30 Mins</div>
+          </div>
+          <div class="performance-parent">
+            <div class="am-container">Performance</div>
+            <div class="am-container">
+              <span>★ ★ ★ ★ </span>
+              <span class="span1">★</span>
+            </div>
+          </div>
+          <div class="form-container">
+          <form action="/upload_video" method="post" enctype="multipart/form-data">
+            <input type="file" name="video_file">
+            <input style="display: none;" type="text" id="emp_name" name="text_name"  required /><br>
+            <input style="display: none;"  type="text" id="emp_rating" name="text_rating" required />
+            <input style="display: none;" type="text" id="emp_sale" name="text_sale" required />           
+            <input class="sub" type="submit" value="Upload">
+         </form>
+          </div>
+
+         
+      <!-- 
+                              <form action="/upload_video" method="POST">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" name="name" value="Surya Musunuri" required />
+                                <input type="file" id="video" name="video" required />
+                                <button type="submit">Upload</button>
+                              </form> -->
+
+        <!-- <form action="/upload_video" method="POST">
+         <label for="name">Name:</label>
+          <input type="text" id="emp_name" name="name" required />
+          <input type="file"  name="video_file" required />
+          <button type="submit">Upload</button>
+        </form> -->
+                              
+                              
+        </div>
+      </div>
+      <div class="hero">
+        <div class="curosel-icon">
+
+          <div class="mySlides fade">
+            <div class="numbertext">1 / 4</div>
+            <img src="/static/1.png" style="width:100%">
+            
+          </div>
+          
+          <div class="mySlides fade">
+            <div class="numbertext">2 / 4</div>
+            <img src="/static/m2.png" style="width:100%">
+          </div>
+          
+          <div class="mySlides fade">
+            <div class="numbertext">3 / 4</div>
+            <img src="/static/m3.png" style="width:100%">
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">4 / 4</div>
+            <img src="/static/m1.png" style="width:100%">
+          </div>
+            
+          </div>
+          <br>
+          
+          <div style="text-align:center">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+          </div>
+          
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <div class="employees">Employees</div>
+        <div class="surya1" onclick="updateName('Surya Kumar','Jan 2023','4.5','450')">Surya</div>
+        <div class="pavan" onclick="updateName('Pavan','Feb 2022','4.7','570')">Pavan</div>
+        <div class="murali" onclick="updateName('Manoj','Dec 2022','4.3','620')">Manoj</div>
+        <div class="manikanta" onclick="updateName('Manikanta','Apr 2023','4.1','670')">Manikanta</div>
+        <div class="sandeep" onclick="updateName('Sandeep','June 2022','4.0','430')">Sandeep</div>
+
+        <img class="mani-icon" alt="" src="./static/mani@2x.png" />
+        <img class="surya-icon" alt="" src="./static/surya@2x.png" "  />
+        <img class="manoj-icon" alt="" src="./static/manoj@2x.png" />
+        <img class="sandeep-icon" alt="" src="./static/sandeep@2x.png" />
+
+        <img class="pavan-icon" alt="" src="./static/pavan@2x.png" />
+
+        <img class="navbar-icon" alt="" src="./static/navbar.svg" />
+
+        <img
+          class="puma-logo-png-33-2-icon"
+          alt=""
+          src="./static/pumalogopng33-2@2x.png"
+        />
+      </div>
+      
+    </div>
+  </body>
+  <script>
+
+  showVideo();  
+
+  function showVideo() {
+      var videoContainer = document.getElementById("video");
+      videoContainer.src="https://drive.google.com/file/d/1zjpSmTW80e_abW--uS-lhHRNhoLqObtp/preview";
+
+      const svElement = document.getElementById("sv");
+      const timeElement = document.getElementById('time');
+      timeElement.textContent = svElement.innerHTML;
+    }
+  function showVideo1() {
+      var videoContainer = document.getElementById("video");
+      videoContainer.src="https://drive.google.com/file/d/13m4ZNfJ57wkE29yD9oWmA94jm_r0HN32/preview";
+      const sv1Element = document.getElementById("sv1");
+      const timeElement = document.getElementById('time');
+      timeElement.textContent = sv1Element.innerHTML;
+    }   
+  
+  function showVideo2() {
+      var videoContainer = document.getElementById("video");
+      videoContainer.src="https://drive.google.com/file/d/13dVdNWJFll1Y9aV82S6zuUkthqJCzEcD/preview";
+    
+      const sv2Element = document.getElementById("sv2");
+      const timeElement = document.getElementById('time');
+      timeElement.textContent = sv2Element.innerHTML;
+    }   
+
+  function showVideo3() {
+      var videoContainer = document.getElementById("video");
+      videoContainer.src="https://drive.google.com/file/d/13kMPrrDILxXL15q9lsmt8V6rJTSh4IHR/preview";
+      const sv3Element = document.getElementById("sv3");
+      const timeElement = document.getElementById('time');
+      timeElement.textContent = sv3Element.innerHTML;
+    }      
+    function showVideo4() {
+      var videoContainer = document.getElementById("video");
+      videoContainer.src="https://www.youtube.com/embed/zn56t5jz43o";
+    }    
+    // function video(){
+    //   var link = document.getElementById("myLink");
+    //   var href = link.href;
+    //   document.getElementById("video").src=href;      
+    // }      
+    
+    document.getElementById("emp_name").value = document.getElementById("Empname").innerHTML;
+    document.getElementById("emp_rating").value = document.getElementById("Emprating").innerHTML;
+    document.getElementById("emp_sale").value = document.getElementById("Empsale").innerHTML; 
+    function updateName(name,hired,rating,sale) {
+        document.getElementById('Empname').innerHTML=name;
+        document.getElementById('Emphired').innerHTML=hired;
+        document.getElementById('Emprating').innerHTML=rating;
+        document.getElementById('Empsale').innerHTML=sale;
+        document.getElementById("emp_name").value = document.getElementById("Empname").innerHTML;
+        document.getElementById("emp_rating").value = document.getElementById("Emprating").innerHTML;
+        document.getElementById("emp_sale").value = document.getElementById("Empsale").innerHTML; 
+      }
+                                  
+    
+      
+   
+    let slideIndex = 0;
+    showSlides();
+    
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}    
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+      setTimeout(showSlides, 3000); // Change image every 2 seconds
+    }
+    
+    window.addEventListener("DOMContentLoaded", function() {
+    const iframe = document.querySelector(".surya-item");
+    const videoForm = document.querySelector(".video-form");
+    const videoUrlInput = videoForm.querySelector("input[name='video-url']");
+
+    videoForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const videoUrl = iframe.getAttribute("src");
+      videoUrlInput.value = videoUrl;
+    });
+  });
+
+  
+  
+  function handleVideoDuration(durationInSeconds) {
+    const minutes = Math.floor(durationInSeconds / 60);
+    const seconds = Math.floor(durationInSeconds % 60);
+    const minsElement = document.getElementById(".mins");
+    minsElement.innerHTML = `${minutes} mins ${seconds} secs`;
+  }
+
+  function requestVideoDuration() {
+    const iframe = document.getElementById("video");
+    iframe.contentWindow.postMessage("getVideoDuration", "*");
+  }
+
+  function getVideoDuration() {
+    requestVideoDuration();
+  }
+
+    </script>
+</html>

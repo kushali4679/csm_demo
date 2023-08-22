@@ -1,0 +1,243 @@
+.group-child {
+  position: absolute;
+  top: -1px;
+  left: calc(50% - 217.5px);
+  border-radius: 24px;
+  background-color: rgba(0, 0, 0, 0.08);
+  border: 2px dashed var(--color-darkslateblue);
+  box-sizing: border-box;
+  width: 435px;
+  height: 263px;
+}
+.drag-drop {
+  top: 70.35px;
+  left: 0;
+  width: 252px;
+  height: 32px;
+}
+.drag-drop,
+.max-2gb,
+.or-select-files {
+  position: absolute;
+  display: inline-block;
+}
+.or-select-files {
+  top: 111.35px;
+  left: 45px;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.75);
+  width: 162px;
+  height: 52px;
+}
+.max-2gb {
+  top: 194.23px;
+  left: 89.53px;
+  font-size: var(--font-size-base);
+  color: rgba(0, 0, 0, 0.72);
+  width: 74.88px;
+  height: 11.47px;
+}
+.upload-cloud-icon {
+  position: absolute;
+  top: 0;
+  left: 97.88px;
+  width: 60.4px;
+  height: 61.69px;
+  overflow: hidden;
+}
+.drag-drop-parent {
+  position: absolute;
+  top: 28px;
+  left: 90px;
+  width: 252px;
+  height: 205.7px;
+}
+.rectangle-parent {
+  position: absolute;
+  top: 444px;
+  left: calc(50% - 216px);
+  width: 433px;
+  height: 261px;
+}
+.upload-the-conversation {
+  position: absolute;
+  top: 151px;
+  left: 89px;
+}
+.group-item,
+.vector-icon {
+  position: absolute;
+  top: 55px;
+  left: 1375px;
+  width: 60px;
+  height: 60px;
+}
+.group-item {
+  top: 0;
+  left: 0;
+  border-radius: var(--br-mini);
+  background-color: var(--color-thistle);
+  width: 293.62px;
+  height: 185px;
+}
+.transcription {
+  position: absolute;
+  top: 39px;
+  left: 44px;
+  font-weight: 500;
+  display: inline-block;
+  width: 203.96px;
+  height: 36px;
+}
+.automatically-convert-your {
+  margin: 0;
+}
+.automatically-convert-your-container {
+  position: absolute;
+  top: 79px;
+  left: 0;
+  font-size: var(--font-size-base);
+  font-weight: 300;
+  display: inline-block;
+  width: 293.62px;
+  height: 71px;
+}
+.group-inner,
+.rectangle-group {
+  position: relative;
+  width: 293.62px;
+  height: 185px;
+}
+.group-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 14px;
+  background-color: var(--color-thistle);
+}
+.generates-summery-for,
+.summarization {
+  position: absolute;
+  top: 39px;
+  left: 4.33px;
+  font-weight: 500;
+  display: inline-block;
+  width: 289px;
+  height: 36px;
+}
+.generates-summery-for {
+  top: 75px;
+  left: 0;
+  font-size: var(--font-size-base);
+  font-weight: 300;
+  width: 293.62px;
+  height: 71px;
+}
+.rectangle-icon {
+  position: absolute;
+  top: 0;
+  left: 0.98px;
+  border-radius: var(--br-mini);
+  width: 292.64px;
+  height: 185px;
+}
+.sentiment-analysis {
+  position: absolute;
+  top: 39px;
+  left: 0.66px;
+  font-weight: 500;
+  display: inline-block;
+  width: 293px;
+  height: 36px;
+}
+.vector-parent {
+  position: relative;
+  width: 293.66px;
+  height: 185px;
+}
+.group-child1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: var(--br-mini);
+  width: 268.01px;
+  height: 185px;
+}
+.detects-the-number-container,
+.speaker-labels {
+  position: absolute;
+  top: 39px;
+  left: 0.01px;
+  font-weight: 500;
+  display: inline-block;
+  width: 268.01px;
+  height: 40px;
+}
+.detects-the-number-container {
+  top: 75px;
+  left: 0;
+  font-size: var(--font-size-base);
+  font-weight: 300;
+  height: 83px;
+}
+.vector-group {
+  position: relative;
+  width: 268.01px;
+  height: 185px;
+}
+.busilyze,
+.group-parent {
+  position: absolute;
+  left: 89px;
+}
+.group-parent {
+  top: 223px;
+  display: flex;
+  flex-direction: row;
+  padding: 0 23px 0 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 64px;
+  font-size: var(--font-size-xl);
+}
+.busilyze {
+  top: 51px;
+  font-size: var(--font-size-21xl);
+  font-family: var(--font-pacifico);
+  color: var(--color-darkslateblue);
+  text-align: left;
+  display: inline-block;
+  width: 143px;
+  height: 64px;
+}
+.after-login-1520 {
+  position: relative;
+  background-color: var(--color-antiquewhite);
+  width: 100%;
+  height: 762px;
+  overflow: hidden;
+  text-align: center;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-poppins);
+}
+
+
+.predicted-topic {
+  font-weight: 500;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-darkslateblue);
+}
+
+.passage {
+  font-size: var(--font-size-base);
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+
+body
+{
+  background-color: #f1e3d3;
+}
