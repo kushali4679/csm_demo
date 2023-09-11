@@ -251,7 +251,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         emotion='negative'
     text=text+'.Here the emotion of the customer and the sales person is '+emotion
     text=text+'.Give us the final summary of the emotion shown by the customer to the sales person and vice versa'
-    openai.api_key = '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'
+    openai.api_key = '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'
     
     # # Create a client
     # client = secretmanager.SecretManagerServiceClient()
@@ -285,24 +285,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
     # job = bigquery_Client.query(query)
     # job.result() 
     
-    query = """
-    INSERT INTO `{}.CSM.csm_data`
-    VALUES (@predicted_topic_label, @passage, @response,@text_name,@text_rating,@text_sale)
-    """.format(project_id)
-
-    job_config = bigquery.QueryJobConfig()
-    job_config.query_parameters = [
-        bigquery.ScalarQueryParameter("predicted_topic_label", "STRING", predicted_topic_label),
-        bigquery.ScalarQueryParameter("passage", "STRING", passage),
-        bigquery.ScalarQueryParameter("response", "STRING", response),
-        bigquery.ScalarQueryParameter("text_name", "STRING", text_name),
-        bigquery.ScalarQueryParameter("text_rating", "STRING", text_rating),
-        bigquery.ScalarQueryParameter("text_sale", "STRING", text_sale)
-    ]
-
-    job = bigquery_Client.query(query, job_config=job_config)
-    job.result()
-
+    
 
 
 
@@ -405,13 +388,63 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         ax1.pie(counts, labels=labels, autopct='%1.1f%%', startangle=90)
         ax1.axis('equal')
         ax1.set_title('Emotion Distribution')
+       
+        
 
+            
+        
+        
+        
         # Create a bar chart for the rating level
         rating_levels = barometer_labels
         rating_counts = [0] * len(rating_levels)
         rating_counts[rating_levels.index(rating_level)] = 1
-        console.log(rating_counts) 
+       
+        
+        query = """
+        INSERT INTO `{}.CSM.csm_data`
+        VALUES (@predicted_topic_label, @passage, @response,@text_name,@text_rating,@text_sale)
+        """.format(project_id)
 
+        job_config = bigquery.QueryJobConfig()
+        job_config.query_parameters = [
+            bigquery.ScalarQueryParameter("predicted_topic_label", "STRING", predicted_topic_label),
+            bigquery.ScalarQueryParameter("passage", "STRING", passage),
+            bigquery.ScalarQueryParameter("response", "STRING", response),
+            bigquery.ScalarQueryParameter("text_name", "STRING", text_name),
+            bigquery.ScalarQueryParameter("text_rating", "STRING", rating_levels.index(rating_level)),
+            bigquery.ScalarQueryParameter("text_sale", "STRING", text_sale)
+        ]
+
+        job = bigquery_Client.query(query, job_config=job_config)
+        job.result()
+
+
+        # query = """
+        # SELECT AVG(average_rating) 
+        #     FROM `{}.CSM.csm_data`
+        #     WHERE employee_name = @text_name;
+        #  """.format(project_id)
+
+        # job_config = bigquery.QueryJobConfig()
+        # job_config.query_parameters = [
+        #     bigquery.ScalarQueryParameter("predicted_topic_label", "STRING", predicted_topic_label),
+        #     bigquery.ScalarQueryParameter("passage", "STRING", passage),
+        #     bigquery.ScalarQueryParameter("response", "STRING", response),
+        #     bigquery.ScalarQueryParameter("text_name", "STRING", text_name),
+        #     bigquery.ScalarQueryParameter("text_rating", "STRING", rating_levels.index(rating_level)),
+        #     bigquery.ScalarQueryParameter("text_sale", "STRING", text_sale)
+        # ]
+
+        # job = bigquery_Client.query(query, job_config=job_config)
+        # job.result()
+
+        # print(job.result)
+
+
+
+
+        
         fig2, ax2 = plt.subplots()
         ax2.bar(rating_levels, rating_counts)
         ax2.set_xlabel('Rating Level')
@@ -422,7 +455,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
      
     fig1.savefig('static/figure1.png')
     fig2.savefig('static/figure2.png') 
-
+    
 
     context = {
         "request": request,
