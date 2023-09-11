@@ -247,28 +247,14 @@
           <div class="form-container">
           <form action="/upload_video" method="post" enctype="multipart/form-data">
             <input type="file" name="video_file">
-            <input style="display: none;" type="text" id="emp_name" name="text_name"  required /><br>
-            <input style="display: none;"  type="text" id="emp_rating" name="text_rating" required />
-            <input style="display: none;" type="text" id="emp_sale" name="text_sale" required />           
+            <input style="" type="text" id="emp_name" name="text_name"  required /><br>
+            <input style=""  type="text" id="emp_rating" name="text_rating" required />
+            <input style="" type="text" id="emp_sale" name="text_sale" required />           
             <input class="sub" type="submit" value="Upload">
          </form>
           </div>
 
-         
-      <!-- 
-                              <form action="/upload_video" method="POST">
-                                <label for="name">Name:</label>
-                                <input type="text" id="name" name="name" value="Surya Musunuri" required />
-                                <input type="file" id="video" name="video" required />
-                                <button type="submit">Upload</button>
-                              </form> -->
-
-        <!-- <form action="/upload_video" method="POST">
-         <label for="name">Name:</label>
-          <input type="text" id="emp_name" name="name" required />
-          <input type="file"  name="video_file" required />
-          <button type="submit">Upload</button>
-        </form> -->
+    
                               
                               
         </div>
@@ -380,17 +366,21 @@
     //   document.getElementById("video").src=href;      
     // }      
     
+
+    
+
     document.getElementById("emp_name").value = document.getElementById("Empname").innerHTML;
     document.getElementById("emp_rating").value = document.getElementById("Emprating").innerHTML;
     document.getElementById("emp_sale").value = document.getElementById("Empsale").innerHTML; 
     function updateName(name,hired,rating,sale) {
+        var randomSaleValue = Math.floor(Math.random() * (999 - 400 + 1)) + 400;
         document.getElementById('Empname').innerHTML=name;
         document.getElementById('Emphired').innerHTML=hired;
         document.getElementById('Emprating').innerHTML=rating;
         document.getElementById('Empsale').innerHTML=sale;
         document.getElementById("emp_name").value = document.getElementById("Empname").innerHTML;
         document.getElementById("emp_rating").value = document.getElementById("Emprating").innerHTML;
-        document.getElementById("emp_sale").value = document.getElementById("Empsale").innerHTML; 
+        document.getElementById("emp_sale").value = randomSaleValue; 
       }
                                   
     

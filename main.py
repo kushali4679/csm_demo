@@ -393,10 +393,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
         # Determine the rating level based on the emotion
         rating_level = barometer_labels[barometer_emotions.index(max_emotion)]
-        # print(f"Emotion with the greatest count: {max_emotion}")
-        # print(f"Count: {max_count}")
-        # print(f"Rating Level: {rating_level}")
-
+      
         # Filter emotions with more than 30% of the total count
         filtered_emotions = {emotion: count for emotion, count in total_emotion_count.items() if count > 0.3 * sum(total_emotion_count.values())}
 
@@ -413,6 +410,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         rating_levels = barometer_labels
         rating_counts = [0] * len(rating_levels)
         rating_counts[rating_levels.index(rating_level)] = 1
+        console.log(rating_counts) 
 
         fig2, ax2 = plt.subplots()
         ax2.bar(rating_levels, rating_counts)
