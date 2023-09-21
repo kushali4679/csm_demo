@@ -9,3 +9,4 @@ numpy
 google-cloud-storage
 google-cloud-bigquery
 google-cloud-secret-manager
+assemblyai
