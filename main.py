@@ -15,6 +15,7 @@ from resemblyzer import preprocess_wav, VoiceEncoder
 from pathlib import Path
 import os
 
+import assemblyai as aai
 import nltk
 import openai
 from googletrans import Translator
@@ -129,100 +130,46 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
    
 
    #######
-
-    wav_fpath = Path(audio_path) 
-    wav = preprocess_wav(wav_fpath)
-    encoder = VoiceEncoder("cpu")
-    _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True, rate=16)
-
-
-    clusterer = SpectralClusterer(
-        min_clusters=2,
-        max_clusters=100)
-
-    labels = clusterer.predict(cont_embeds)
-
-
-
-    def create_labelling(labels,wav_splits):
-        from resemblyzer import sampling_rate
-        times = [((s.start + s.stop) / 2) / sampling_rate for s in wav_splits]
-        labelling = []
-        start_time = 0
-
-        for i,time in enumerate(times):
-            if i>0 and labels[i]!=labels[i-1]:
-                temp = [str(labels[i-1]),start_time,time]
-                labelling.append(tuple(temp))
-                start_time = time
-            if i==len(times)-1:
-                temp = [str(labels[i]),start_time,time]
-                labelling.append(tuple(temp))
-        return labelling
-    labelling = create_labelling(labels,wav_splits)
-
-    list=[]
-    def split_audio(audio_file, labelling):
-        
-        audio = AudioSegment.from_file(audio_file)
-
-        for i, (label, start_time, end_time) in enumerate(labelling):
-            start_ms = int(start_time * 1000)  # Convert start time to milliseconds
-            end_ms = int(end_time * 1000)  # Convert end time to milliseconds
-
-            segment = audio[start_ms:end_ms]  # Extract the segment
-
-            # Save the segment as a separate audio file
-            output_file = f"{label}_segment{i}.wav"
-            segment.export(output_file, format="wav")
-            list.append(output_file)
-            # print(f"Segment {i} saved as {output_file}")
-
-    # Example usage
-    audio_file = "audio.wav" 
-
-    split_audio(audio_file, labelling)
-
-    def translate_text(text, target_language='en'):
-        translator = Translator()
-        translated_text = translator.translate(text, dest=target_language)
-        return translated_text.text
-
-    
-    passage = [] 
-    person="Sales-Person : "
-        
-        
-    for i in list:
-        recognizer = sr.Recognizer()
-
-        audio_file = i
-
-        with sr.AudioFile(audio_file) as source:
-            audio = recognizer.record(source)
-
-            try:
-                text = person
-                text = text + recognizer.recognize_google(audio)
-                if person == "Sales-Person: ":
-                    person = "Customer: "
-                else:
-                    person = "Sales-Person: "
-                    
-                # Translate the text to English
-                translated_text = translate_text(text, target_language='en')
-                passage.append(translated_text)
-            except sr.UnknownValueError:
-                pass
-            except sr.RequestError as e:
-                pass
-        
-
-    #####
-
+   
+   
 
     recognizer = sr.Recognizer()
     audio_file = "audio.wav"
+    
+
+
+
+
+    passage=[]
+        
+    aai.settings.api_key = f"9ecd2b21976a42fc8032a68cd31f90d3" 
+
+    
+    config = aai.TranscriptionConfig(speaker_labels=True)
+    transcriber = aai.Transcriber(config=config)
+    
+    try:
+        transcript = transcriber.transcribe(FILE_URL)
+        
+        if transcript is not None and transcript.utterances is not None:
+            utterances = transcript.utterances
+            for utterance in utterances:
+                speaker = utterance.speaker
+                text = utterance.text
+                passage.append("Speaker"+ speaker +":"+ text)
+        else:
+            print("Transcript is empty or None.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+       
+
+
+
+
+
+
+
 
     with sr.AudioFile(audio_file) as source:
         audio = recognizer.record(source)
@@ -251,20 +198,9 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         emotion='negative'
     text=text+'.Here the emotion of the customer and the sales person is '+emotion
     text=text+'.Give us the final summary of the emotion shown by the customer to the sales person and vice versa'
-    openai.api_key = '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'
+    openai.api_key = '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'
     
-    # # Create a client
-    # client = secretmanager.SecretManagerServiceClient()
-
-    # # Specify the name of the secret
-    # secret_name = "projects/your-project-id/secrets/your-secret-name/versions/latest"
-
-    # # Access the secret
-    # response = client.access_secret_version(request={"name": secret_name})
-    # api_key = response.payload.data.decode("UTF-8")
-
-    # # Use the API key in your application
-    # print(api_key)
+   
     
     def chat_with_gpt3(prompt):
         response = openai.Completion.create(
@@ -326,6 +262,13 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
             cv2.putText(frame, emotion_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
         return frame, emotion_count
+    
+
+    
+    ####
+
+    
+    ####
 
     def index():
         # Get the uploaded video file
@@ -400,6 +343,8 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         rating_counts = [0] * len(rating_levels)
         rating_counts[rating_levels.index(rating_level)] = 1
        
+
+        
         
         query = """
         INSERT INTO `{}.CSM.csm_data`
@@ -457,6 +402,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
     fig2.savefig('static/figure2.png') 
     
 
+
     context = {
         "request": request,
         "video_path": video_path,
@@ -470,3 +416,100 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
 
     return templates.TemplateResponse("result.html", context)
+
+
+
+
+
+
+
+
+
+
+
+    #     wav_fpath = Path(audio_path) 
+    # wav = preprocess_wav(wav_fpath)
+    # encoder = VoiceEncoder("cpu")
+    # _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True, rate=16)
+
+
+    # clusterer = SpectralClusterer(
+    #     min_clusters=2,
+    #     max_clusters=100)
+
+    # labels = clusterer.predict(cont_embeds)
+
+
+
+    # def create_labelling(labels,wav_splits):
+    #     from resemblyzer import sampling_rate
+    #     times = [((s.start + s.stop) / 2) / sampling_rate for s in wav_splits]
+    #     labelling = []
+    #     start_time = 0
+
+    #     for i,time in enumerate(times):
+    #         if i>0 and labels[i]!=labels[i-1]:
+    #             temp = [str(labels[i-1]),start_time,time]
+    #             labelling.append(tuple(temp))
+    #             start_time = time
+    #         if i==len(times)-1:
+    #             temp = [str(labels[i]),start_time,time]
+    #             labelling.append(tuple(temp))
+    #     return labelling
+    # labelling = create_labelling(labels,wav_splits)
+
+    # list=[]
+    # def split_audio(audio_file, labelling):
+        
+    #     audio = AudioSegment.from_file(audio_file)
+
+    #     for i, (label, start_time, end_time) in enumerate(labelling):
+    #         start_ms = int(start_time * 1000)  # Convert start time to milliseconds
+    #         end_ms = int(end_time * 1000)  # Convert end time to milliseconds
+
+    #         segment = audio[start_ms:end_ms]  # Extract the segment
+
+    #         # Save the segment as a separate audio file
+    #         output_file = f"{label}_segment{i}.wav"
+    #         segment.export(output_file, format="wav")
+    #         list.append(output_file)
+    #         # print(f"Segment {i} saved as {output_file}")
+
+    # audio_file = "audio.wav" 
+
+    # split_audio(audio_file, labelling)
+
+    # def translate_text(text, target_language='en'):
+    #     translator = Translator()
+    #     translated_text = translator.translate(text, dest=target_language)
+    #     return translated_text.text
+
+    
+    # passage = [] 
+    # person="Sales-Person : "
+        
+        
+    # for i in list:
+    #     recognizer = sr.Recognizer()
+
+    #     audio_file = i
+
+    #     with sr.AudioFile(audio_file) as source:
+    #         audio = recognizer.record(source)
+
+    #         try:
+    #             text = person
+    #             text = text + recognizer.recognize_google(audio)
+    #             if person == "Sales-Person: ":
+    #                 person = "Customer: "
+    #             else:
+    #                 person = "Sales-Person: "
+                    
+    #             # Translate the text to English
+    #             translated_text = translate_text(text, target_language='en')
+    #             passage.append(translated_text)
+    #         except sr.UnknownValueError:
+    #             pass
+    #         except sr.RequestError as e:
+    #             pass
+        
