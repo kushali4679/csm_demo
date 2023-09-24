@@ -11,6 +11,11 @@ from pydub import AudioSegment
 from spectralcluster import SpectralClusterer
 from resemblyzer import preprocess_wav, VoiceEncoder
 
+import requests
+import json
+import time
+from collections import defaultdict
+
 
 from pathlib import Path
 import os
@@ -43,7 +48,7 @@ key_Path = "cloudkarya-internship-76c41ffa6790.json"
 project_id = "cloudkarya-internship"
 bigquery_Client = bigquery.Client.from_service_account_json(key_Path)
 storage_Client = storage.Client.from_service_account_json(key_Path)
-bucket_Name = "pkcsm-raw"
+# bucket_Name = "pkcsm-raw"
 
 
 
@@ -59,10 +64,10 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
     video_path = f"videos/{video_file.filename}"
     folder_Name = "videos"
 
-    bucket = storage_Client.get_bucket(bucket_Name)
-    bucket = storage_Client.get_bucket(bucket_Name)
-    blob = bucket.blob(f'{video_file.filename}')
-    blob.upload_from_filename(video_path)
+    # bucket = storage_Client.get_bucket(bucket_Name)
+    # bucket = storage_Client.get_bucket(bucket_Name)
+    # blob = bucket.blob(f'{video_file.filename}')
+    # blob.upload_from_filename(video_path)
 
 
     with open(video_path, "wb") as f:
@@ -129,40 +134,67 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
    
 
-   #######
-   
-   
-
-    recognizer = sr.Recognizer()
-    audio_file = "audio.wav"
-    
-
-
-
-
+   #############################################################################
     passage=[]
-        
-    aai.settings.api_key = f"9ecd2b21976a42fc8032a68cd31f90d3" 
+    YOUR_API_TOKEN = "9ecd2b21976a42fc8032a68cd31f90d3"
 
-    
-    config = aai.TranscriptionConfig(speaker_labels=True)
-    transcriber = aai.Transcriber(config=config)
-    
-    try:
-        transcript = transcriber.transcribe(FILE_URL)
-        
-        if transcript is not None and transcript.utterances is not None:
-            utterances = transcript.utterances
-            for utterance in utterances:
-                speaker = utterance.speaker
-                text = utterance.text
-                passage.append("Speaker"+ speaker +":"+ text)
+    # URL of the file to transcribe
+    FILE_URL = "https://drive.google.com/uc?export=download&id=1HCmRWRxaFbVti-P5nuUo4988HxU-d-5S"
+
+    # AssemblyAI transcript endpoint (where we submit the file)
+    transcript_endpoint = "https://api.assemblyai.com/v2/transcript"
+
+    # request parameters where Speaker Diarization has been enabled
+    data = {
+    "audio_url": FILE_URL,
+    "speaker_labels": True,
+    "speakers_expected": 3
+    }
+
+    # HTTP request headers
+    headers={
+    "Authorization": "9ecd2b21976a42fc8032a68cd31f90d3",
+    "Content-Type": "application/json"
+    }
+
+    # submit for transcription via HTTP request
+    response = requests.post(transcript_endpoint,
+                            json=data,
+                            headers=headers)
+
+    # polling for transcription completion
+    polling_endpoint = f"https://api.assemblyai.com/v2/transcript/{response.json()['id']}"
+    current_speaker = None
+    conversation = defaultdict(list)
+    while True:
+        transcription_result = requests.get(polling_endpoint, headers=headers).json()
+
+        if transcription_result['status'] == 'completed':
+            current_speaker = None
+            current_sentence = ""
+
+            for word in transcription_result.get('words', []):
+                text = word.get('text')
+                speaker = word.get('speaker')
+
+                if text and speaker:
+                    if speaker != current_speaker:
+                        if current_sentence:
+                            passage.append(f"Speaker {current_speaker}: {current_sentence}")
+                            print(f"Speaker {current_speaker}: {current_sentence}")
+                        current_speaker = speaker
+                        current_sentence = text
+                    else:
+                        current_sentence += " " + text
+
+            # Print the last sentence
+            if current_sentence:
+                print(f"Speaker {current_speaker}: {current_sentence}")
+            break
+        elif transcription_result['status'] == 'error':
+            raise RuntimeError(f"Transcription failed: {transcription_result['error']}")
         else:
-            print("Transcript is empty or None.")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-
-       
+            time.sleep(1)
 
 
 
@@ -170,6 +202,13 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
 
 
+
+
+
+    #############################################################################
+
+
+    audio_file = "audio.wav"
 
     with sr.AudioFile(audio_file) as source:
         audio = recognizer.record(source)
@@ -198,9 +237,8 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         emotion='negative'
     text=text+'.Here the emotion of the customer and the sales person is '+emotion
     text=text+'.Give us the final summary of the emotion shown by the customer to the sales person and vice versa'
-    openai.api_key = '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'
+    openai.api_key = ''
     
-   
     
     def chat_with_gpt3(prompt):
         response = openai.Completion.create(
@@ -263,12 +301,6 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
         return frame, emotion_count
     
-
-    
-    ####
-
-    
-    ####
 
     def index():
         # Get the uploaded video file
@@ -425,91 +457,3 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
 
 
-
-
-    #     wav_fpath = Path(audio_path) 
-    # wav = preprocess_wav(wav_fpath)
-    # encoder = VoiceEncoder("cpu")
-    # _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True, rate=16)
-
-
-    # clusterer = SpectralClusterer(
-    #     min_clusters=2,
-    #     max_clusters=100)
-
-    # labels = clusterer.predict(cont_embeds)
-
-
-
-    # def create_labelling(labels,wav_splits):
-    #     from resemblyzer import sampling_rate
-    #     times = [((s.start + s.stop) / 2) / sampling_rate for s in wav_splits]
-    #     labelling = []
-    #     start_time = 0
-
-    #     for i,time in enumerate(times):
-    #         if i>0 and labels[i]!=labels[i-1]:
-    #             temp = [str(labels[i-1]),start_time,time]
-    #             labelling.append(tuple(temp))
-    #             start_time = time
-    #         if i==len(times)-1:
-    #             temp = [str(labels[i]),start_time,time]
-    #             labelling.append(tuple(temp))
-    #     return labelling
-    # labelling = create_labelling(labels,wav_splits)
-
-    # list=[]
-    # def split_audio(audio_file, labelling):
-        
-    #     audio = AudioSegment.from_file(audio_file)
-
-    #     for i, (label, start_time, end_time) in enumerate(labelling):
-    #         start_ms = int(start_time * 1000)  # Convert start time to milliseconds
-    #         end_ms = int(end_time * 1000)  # Convert end time to milliseconds
-
-    #         segment = audio[start_ms:end_ms]  # Extract the segment
-
-    #         # Save the segment as a separate audio file
-    #         output_file = f"{label}_segment{i}.wav"
-    #         segment.export(output_file, format="wav")
-    #         list.append(output_file)
-    #         # print(f"Segment {i} saved as {output_file}")
-
-    # audio_file = "audio.wav" 
-
-    # split_audio(audio_file, labelling)
-
-    # def translate_text(text, target_language='en'):
-    #     translator = Translator()
-    #     translated_text = translator.translate(text, dest=target_language)
-    #     return translated_text.text
-
-    
-    # passage = [] 
-    # person="Sales-Person : "
-        
-        
-    # for i in list:
-    #     recognizer = sr.Recognizer()
-
-    #     audio_file = i
-
-    #     with sr.AudioFile(audio_file) as source:
-    #         audio = recognizer.record(source)
-
-    #         try:
-    #             text = person
-    #             text = text + recognizer.recognize_google(audio)
-    #             if person == "Sales-Person: ":
-    #                 person = "Customer: "
-    #             else:
-    #                 person = "Sales-Person: "
-                    
-    #             # Translate the text to English
-    #             translated_text = translate_text(text, target_language='en')
-    #             passage.append(translated_text)
-    #         except sr.UnknownValueError:
-    #             pass
-    #         except sr.RequestError as e:
-    #             pass
-        
