@@ -46,8 +46,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 key_Path = "cloudkarya-internship-76c41ffa6790.json"
 project_id = "cloudkarya-internship"
-bigquery_Client = bigquery.Client.from_service_account_json(key_Path)
-storage_Client = storage.Client.from_service_account_json(key_Path)
+# bigquery_Client = bigquery.Client.from_service_account_json(key_Path)
+# storage_Client = storage.Client.from_service_account_json(key_Path)
 # bucket_Name = "pkcsm-raw"
 
 
@@ -190,6 +190,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
             # Print the last sentence
             if current_sentence:
                 print(f"Speaker {current_speaker}: {current_sentence}")
+                passage.append(f"Speaker {current_speaker}: {current_sentence}")
             break
         elif transcription_result['status'] == 'error':
             raise RuntimeError(f"Transcription failed: {transcription_result['error']}")
@@ -237,7 +238,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         emotion='negative'
     text=text+'.Here the emotion of the customer and the sales person is '+emotion
     text=text+'.Give us the final summary of the emotion shown by the customer to the sales person and vice versa'
-    openai.api_key = ''
+    openai.api_key = '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'
     
     
     def chat_with_gpt3(prompt):
@@ -378,23 +379,23 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
         
         
-        query = """
-        INSERT INTO `{}.CSM.csm_data`
-        VALUES (@predicted_topic_label, @passage, @response,@text_name,@text_rating,@text_sale)
-        """.format(project_id)
+                        # query = """
+                        # INSERT INTO `{}.CSM.csm_data`
+                        # VALUES (@predicted_topic_label, @passage, @response,@text_name,@text_rating,@text_sale)
+                        # """.format(project_id)
 
-        job_config = bigquery.QueryJobConfig()
-        job_config.query_parameters = [
-            bigquery.ScalarQueryParameter("predicted_topic_label", "STRING", predicted_topic_label),
-            bigquery.ScalarQueryParameter("passage", "STRING", passage),
-            bigquery.ScalarQueryParameter("response", "STRING", response),
-            bigquery.ScalarQueryParameter("text_name", "STRING", text_name),
-            bigquery.ScalarQueryParameter("text_rating", "STRING", rating_levels.index(rating_level)),
-            bigquery.ScalarQueryParameter("text_sale", "STRING", text_sale)
-        ]
+                        # job_config = bigquery.QueryJobConfig()
+                        # job_config.query_parameters = [
+                        #     bigquery.ScalarQueryParameter("predicted_topic_label", "STRING", predicted_topic_label),
+                        #     bigquery.ScalarQueryParameter("passage", "STRING", passage),
+                        #     bigquery.ScalarQueryParameter("response", "STRING", response),
+                        #     bigquery.ScalarQueryParameter("text_name", "STRING", text_name),
+                        #     bigquery.ScalarQueryParameter("text_rating", "STRING", rating_levels.index(rating_level)),
+                        #     bigquery.ScalarQueryParameter("text_sale", "STRING", text_sale)
+                        # ]
 
-        job = bigquery_Client.query(query, job_config=job_config)
-        job.result()
+                        # job = bigquery_Client.query(query, job_config=job_config)
+                        # job.result()
 
 
         # query = """
