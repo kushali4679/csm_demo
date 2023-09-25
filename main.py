@@ -238,7 +238,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         emotion='negative'
     text=text+'.Here the emotion of the customer and the sales person is '+emotion
     text=text+'.Give us the final summary of the emotion shown by the customer to the sales person and vice versa'
-    openai.api_key = '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'
+    openai.api_key = ''
     
     
     def chat_with_gpt3(prompt):

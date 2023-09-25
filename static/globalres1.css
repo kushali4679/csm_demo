@@ -22,7 +22,11 @@
 }
 
 .script{
-  font-size: 22px;
+  font-size: 17px;
+  max-height: 100vh;
+  border-radius: 15px;
+  border: 2px solid black;
+  overflow-y: auto;
 }
 .sentimental-analysis {
   top: 882px;
