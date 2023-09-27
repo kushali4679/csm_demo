@@ -83,57 +83,62 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
     audio_path = "audio.wav"
     extract_audio(video_path, audio_path)
 
-    # Perform topic detection on the conversation
-    recognizer = sr.Recognizer()
+  ############################################################################
+    predicted_topic_label=""
+
+    # replace with your API token
+    YOUR_API_TOKEN = "9ecd2b21976a42fc8032a68cd31f90d3"
+
+    # URL of the file to transcribe
+    FILE_URL = "https://drive.google.com/uc?export=download&id=1HCmRWRxaFbVti-P5nuUo4988HxU-d-5S"
+
+    # AssemblyAI transcript endpoint (where we submit the file)
+    transcript_endpoint = "https://api.assemblyai.com/v2/transcript"
+
+    # request parameters where Speaker Diarization has been enabled
+    data = {
+    "audio_url": FILE_URL,
+    "speaker_labels": True,
+    "speakers_expected": 3,
+    "iab_categories":True
+    }
+
+    # HTTP request headers
+    headers={
+    "Authorization": "9ecd2b21976a42fc8032a68cd31f90d3",
+    "Content-Type": "application/json"
+    }
+
+    # submit for transcription via HTTP request
+    response = requests.post(transcript_endpoint,
+                            json=data,
+                            headers=headers)
+
+    # polling for transcription completion
+    polling_endpoint = f"https://api.assemblyai.com/v2/transcript/{response.json()['id']}"
+
+    while True:
+        transcription_result = requests.get(polling_endpoint, headers=headers).json()
+
+        if transcription_result['status'] == 'completed':
+            # Get and print the first key in the summary
+            summary = transcription_result.get('iab_categories_result', {}).get('summary', {})
+            if summary:
+                first_key = next(iter(summary))
+                formatted_result = " -> ".join(first_key.split('>'))
+                predicted_topic_label=formatted_result
+            break
+        elif transcription_result['status'] == 'error':
+            raise RuntimeError(f"Transcription failed: {transcription_result['error']}")
+        else:
+            time.sleep(3)
 
 
 
 
-    with sr.AudioFile(audio_path) as source:
-        audio = recognizer.record(source)
-
-    # Transcribe the audio to text
-    conversation = recognizer.recognize_google(audio)
-
-    # Tokenize the conversation
-    encoded_input = tokenizer(conversation, padding=True, truncation=True, return_tensors="pt")
-    input_ids = encoded_input["input_ids"].to(device)
-    attention_mask = encoded_input["attention_mask"].to(device)
-
-    # Forward pass through the model
-    with torch.no_grad():
-        logits = model(input_ids, attention_mask=attention_mask).logits
-
-    # Get the predicted topic
-    predicted_topic = torch.argmax(logits, dim=1).item()
-
-    # Map the predicted topic to the corresponding label
-    labels = [
-        "Arts_&_culture",
-        "Business_&_entrepreneurs",
-        "Celebrity_&_pop_culture",
-        "Diaries_&_Daily_life",
-        "Family",
-        "Fashion_&_Style",
-        "Film_tv_&_Video",
-        "Fitness_&_Health",
-        "Food_&_Dining",
-        "Gaming",
-        "Learning_&_Educational",
-        "Music",
-        "News_&_Social_concern",
-        "Other_hobbies",
-        "Relationships",
-        "Science_&_Technology",
-        "Sports",
-        "Travel_&_Adventure",
-        "youth_&_student_life"
-    ]
-
-    predicted_topic_label = labels[predicted_topic]
 
    
-
+    recognizer = sr.Recognizer()
    #############################################################################
     passage=[]
     YOUR_API_TOKEN = "9ecd2b21976a42fc8032a68cd31f90d3"
