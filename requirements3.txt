@@ -7,3 +7,6 @@ langdetect
 google-cloud-translate
 googletrans==4.0.0-rc1
 PyQt5
+google-api-python-client
+google-auth-httplib2 
+google-auth-oauthlib
