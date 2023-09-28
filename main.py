@@ -33,6 +33,11 @@ from google.cloud import bigquery,storage
 import warnings
 warnings.filterwarnings("ignore")
 
+from google.oauth2 import service_account
+from googleapiclient.http import MediaFileUpload
+from googleapiclient.discovery import build
+
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -83,10 +88,100 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
     audio_path = "audio.wav"
     extract_audio(video_path, audio_path)
   
+  #############################################################################
+    
+    sen=""
+    
+    # replace with your API token
+    YOUR_API_TOKEN = "8b64b97509bc48b196d21c1c09bae8bb"
+
+    # URL of the file to transcribe
+    FILE_URL = "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"
+
+    # AssemblyAI transcript endpoint (where we submit the file)
+    transcript_endpoint = "https://api.assemblyai.com/v2/transcript"
+
+    # request parameters where Sentiment Analysis has been enabled
+    data = {
+    "audio_url": FILE_URL,
+    "sentiment_analysis": True
+    }
+
+    # HTTP request headers
+    headers={
+    "Authorization": YOUR_API_TOKEN,
+    "Content-Type": "application/json"
+    }
+
+    # submit for transcription via HTTP request
+    response = requests.post(transcript_endpoint,
+                            json=data,
+                            headers=headers)
+
+    # polling for transcription completion
+    polling_endpoint = f"https://api.assemblyai.com/v2/transcript/{response.json()['id']}"
+
+    while True:
+        transcription_result = requests.get(polling_endpoint, headers=headers).json()
+
+        if transcription_result['status'] == 'completed':
+            # Get the sentiment analysis results
+            sentiment_analysis_results = transcription_result.get('sentiment_analysis_results', None)
+
+            if sentiment_analysis_results:
+                # Initialize counts for positive, neutral, and negative sentiments
+                positive_count = 0
+                neutral_count = 0
+                negative_count = 0
+
+                # Count sentiments
+                for result in sentiment_analysis_results:
+                    sentiment = result['sentiment']
+                    if sentiment == 'POSITIVE':
+                        positive_count += 1
+                    elif sentiment == 'NEUTRAL':
+                        neutral_count += 1
+                    elif sentiment == 'NEGATIVE':
+                        negative_count += 1
+
+                # Print the counts
+                sen=f"There are {positive_count} Positive Statements,{neutral_count} Neutral Statements and {negative_count} Negative Statements "
+                
+            else:
+                print("No sentiment analysis results found.")
+            
+            break
+        elif transcription_result['status'] == 'error':
+            raise RuntimeError(f"Transcription failed: {transcription_result['error']}")
+        else:
+            time.sleep(3)
+ 
+
+  #############################################################################
+
+    # Replace with the path to your credentials JSON file
+    credentials_file = 'myproject1-400410-3f87b7013a3f.json'
+
+    # Create a service account using the credentials
+    creds = service_account.Credentials.from_service_account_file(credentials_file, scopes=['https://www.googleapis.com/auth/drive'])
+
+    # Create a Google Drive API service
+    service = build('drive', 'v3', credentials=creds)
+
+    # Define the file to upload and its metadata
+    file_metadata = {
+        'name': 'audios',  # Name of the file in Google Drive
+    }
+    media = MediaFileUpload('audio.wav',  # Replace with the path to your audio file
+                            mimetype='audio/wav')
+
+    # Upload the file
+    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    print('File ID: %s' % file.get('id'))
 
   #############################################################################
     paragraph = ""
-
+    # replace with your API token
     YOUR_API_TOKEN = "8b64b97509bc48b196d21c1c09bae8bb"
 
     # URL of the file to transcribe
@@ -97,14 +192,14 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
     # request parameters where Entity Detection has been enabled
     data = {
-    "audio_url": FILE_URL,
-    "entity_detection": True
+        "audio_url": FILE_URL,
+        "entity_detection": True
     }
 
     # HTTP request headers
     headers = {
-    "Authorization": YOUR_API_TOKEN,
-    "Content-Type": "application/json"
+        "Authorization": YOUR_API_TOKEN,
+        "Content-Type": "application/json"
     }
 
     # submit for transcription via HTTP request
@@ -127,24 +222,26 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
             for entity in entities:
                 entity_text = entity['text']
                 entity_category = entity['entity_type']
-                
+
                 if entity_category not in entity_groups:
                     entity_groups[entity_category] = []
 
                 entity_groups[entity_category].append(entity_text)
 
-            # Print the grouped entities
+            # Create a single paragraph with all categories and texts
+        
             for category, texts in entity_groups.items():
-                paragraph += f"\033[1mCategory: {category}\033[0m\n"  # Use ANSI escape codes for bold
-                paragraph += "\033[1mEntities:\033[0m " + ", ".join(texts) + "\n\n"  # Use ANSI escape codes for bold
+                paragraph += f"Category: {category}\n"
+                paragraph += "Entities: " + ", ".join(texts) + "\n\n"
 
+            # Print the single paragraph
+            print(paragraph)
 
             break
         elif transcription_result['status'] == 'error':
             raise RuntimeError(f"Transcription failed: {transcription_result['error']}")
         else:
             time.sleep(3)
-
 
 
 
@@ -520,6 +617,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         "paragraph":paragraph,
         "response":response,
         "text_name":text_name,
+        "sen":sen,
         "text_rating":text_rating,
         "text_sale":text_sale
     }

@@ -20,7 +20,19 @@
   margin-left: 5px;
   font-weight: 100;
 }
-
+.sen
+{
+  margin-left: 35px;
+  font-size: 19px;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.det{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 25vw;
+}
 .res
 {
   font-size: 19px;
