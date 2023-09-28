@@ -21,8 +21,12 @@
   font-weight: 100;
 }
 
+.res
+{
+  font-size: 19px;
+}
 .script{
-  font-size: 17px;
+  font-size: 19px;
   max-height: 100vh;
   overflow-y: auto;
 }
@@ -39,6 +43,7 @@
 .topic1
 {
   top: -15px;
+  font-size: 19px;
 }
 .ee-inner,
 .frame-child,
@@ -100,8 +105,6 @@
   position: relative;
   display: block;
   width: 100%;
-  height: 762px;
-  overflow: hidden;
   text-align: left;
   font-size: var(--font-size-5xl);
   color: var(--color-gray-100);

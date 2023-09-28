@@ -82,6 +82,77 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
     audio_path = "audio.wav"
     extract_audio(video_path, audio_path)
+  
+
+  #############################################################################
+    paragraph = ""
+
+    YOUR_API_TOKEN = "8b64b97509bc48b196d21c1c09bae8bb"
+
+    # URL of the file to transcribe
+    FILE_URL = "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"
+
+    # AssemblyAI transcript endpoint (where we submit the file)
+    transcript_endpoint = "https://api.assemblyai.com/v2/transcript"
+
+    # request parameters where Entity Detection has been enabled
+    data = {
+    "audio_url": FILE_URL,
+    "entity_detection": True
+    }
+
+    # HTTP request headers
+    headers = {
+    "Authorization": YOUR_API_TOKEN,
+    "Content-Type": "application/json"
+    }
+
+    # submit for transcription via HTTP request
+    response = requests.post(transcript_endpoint,
+                            json=data,
+                            headers=headers)
+
+    # polling for transcription completion
+    polling_endpoint = f"https://api.assemblyai.com/v2/transcript/{response.json()['id']}"
+
+    # Dictionary to store entities grouped by category
+    entity_groups = {}
+
+    while True:
+        transcription_result = requests.get(polling_endpoint, headers=headers).json()
+
+        if transcription_result['status'] == 'completed':
+            # Get and group the detected entities by category
+            entities = transcription_result.get('entities', [])
+            for entity in entities:
+                entity_text = entity['text']
+                entity_category = entity['entity_type']
+                
+                if entity_category not in entity_groups:
+                    entity_groups[entity_category] = []
+
+                entity_groups[entity_category].append(entity_text)
+
+            # Print the grouped entities
+            for category, texts in entity_groups.items():
+                paragraph += f"\033[1mCategory: {category}\033[0m\n"  # Use ANSI escape codes for bold
+                paragraph += "\033[1mEntities:\033[0m " + ", ".join(texts) + "\n\n"  # Use ANSI escape codes for bold
+
+
+            break
+        elif transcription_result['status'] == 'error':
+            raise RuntimeError(f"Transcription failed: {transcription_result['error']}")
+        else:
+            time.sleep(3)
+
+
+
+
+
+
+
+
+
 
   ############################################################################
     predicted_topic_label=""
@@ -446,6 +517,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         "video_path": video_path,
         "predicted_topic": predicted_topic_label,
         "passage":passage,
+        "paragraph":paragraph,
         "response":response,
         "text_name":text_name,
         "text_rating":text_rating,

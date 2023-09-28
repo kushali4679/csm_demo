@@ -36,11 +36,14 @@
         </div>
         <div class="summarization">
           <h3>Summary of the conversation :</h3>
-          <p>{{response}}</p>
+          <p class="res">{{response}}</p>
           <div class="topic-detection"><h3>Topic Detection :</h3>
             <p class="topic1">Here the conversation is about {{ predicted_topic }}</p>
           </div>
-          
+          <div class="entity">
+            <h3>Entity Detection :</h3>
+            <p class="script">{{ paragraph }}</p> 
+          </div>
         </div>
       </div>  
       <!-- <div class="sentimental-analysis">Sentimental Analysis</div> -->
