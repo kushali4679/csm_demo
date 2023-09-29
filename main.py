@@ -7,9 +7,6 @@ import torch
 import speech_recognition as sr
 from moviepy.editor import VideoFileClip
 
-from pydub import AudioSegment
-from spectralcluster import SpectralClusterer
-from resemblyzer import preprocess_wav, VoiceEncoder
 
 import requests
 import json
@@ -233,9 +230,9 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
             for category, texts in entity_groups.items():
                 paragraph += f"Category: {category}\n"
                 paragraph += "Entities: " + ", ".join(texts) + "\n\n"
-
+                print(paragraph)
             # Print the single paragraph
-            print(paragraph)
+            # print(paragraph)
 
             break
         elif transcription_result['status'] == 'error':
@@ -452,7 +449,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         # Preprocess the frame
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30),verbose=0)
 
         # Initialize emotion count dictionary
         emotion_count = {emotion: 0 for emotion in emotions}

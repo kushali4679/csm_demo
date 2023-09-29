@@ -1,7 +1,5 @@
 
-pydub
 moviepy
-spectralcluster
 pathlib
 nltk
 openai
