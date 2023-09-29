@@ -6,17 +6,12 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 import speech_recognition as sr
 from moviepy.editor import VideoFileClip
-
-
 import requests
 import json
 import time
 from collections import defaultdict
-
-
 from pathlib import Path
 import os
-
 import assemblyai as aai
 import nltk
 import openai
@@ -156,28 +151,10 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
 
   #############################################################################
 
-    # Replace with the path to your credentials JSON file
-    credentials_file = 'myproject1-400410-3f87b7013a3f.json'
-
-    # Create a service account using the credentials
-    creds = service_account.Credentials.from_service_account_file(credentials_file, scopes=['https://www.googleapis.com/auth/drive'])
-
-    # Create a Google Drive API service
-    service = build('drive', 'v3', credentials=creds)
-
-    # Define the file to upload and its metadata
-    file_metadata = {
-        'name': 'audios',  # Name of the file in Google Drive
-    }
-    media = MediaFileUpload('audio.wav',  # Replace with the path to your audio file
-                            mimetype='audio/wav')
-
-    # Upload the file
-    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-    print('File ID: %s' % file.get('id'))
+   
 
   #############################################################################
-    paragraph = ""
+    paragraph = []
     # replace with your API token
     YOUR_API_TOKEN = "8b64b97509bc48b196d21c1c09bae8bb"
 
@@ -226,11 +203,15 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
                 entity_groups[entity_category].append(entity_text)
 
             # Create a single paragraph with all categories and texts
-        
+           
             for category, texts in entity_groups.items():
-                paragraph += f"Category: {category}\n"
-                paragraph += "Entities: " + ", ".join(texts) + "\n\n"
-                print(paragraph)
+                paragraph1=""
+                paragraph1 += f"Category: {category}"
+                paragraph1 += "Entities: " + ", ".join(texts) 
+                
+                paragraph.append(paragraph1)
+                
+                print(paragraph1)
             # Print the single paragraph
             # print(paragraph)
 
@@ -449,7 +430,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
         # Preprocess the frame
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30),verbose=0)
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
         # Initialize emotion count dictionary
         emotion_count = {emotion: 0 for emotion in emotions}
@@ -460,7 +441,7 @@ async def upload_video(request : Request, video_file: UploadFile = File(...),tex
             resized_roi = cv2.resize(face_roi, (48, 48))
             normalized_roi = resized_roi / 255.0
             reshaped_roi = np.reshape(normalized_roi, (1, 48, 48, 1))
-            emotion_prediction = emotion_model.predict(reshaped_roi)
+            emotion_prediction = emotion_model.predict(reshaped_roi,verbose=0)
             emotion_label = emotions[np.argmax(emotion_prediction)]
 
             # Increment emotion count

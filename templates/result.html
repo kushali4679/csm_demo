@@ -17,6 +17,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
     />
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
   <body>
 
@@ -63,5 +65,67 @@
       <img class="fig2" src="/static/figure2.png" alt="Figure">
     </div>
     
+
+    
+
+
+    <div id="speedometer-container">
+      <svg id="speedometer" width="300" height="300"></svg>
+  </div>
+
+   
+
+    <script>
+      // Constants for the speedometer range (adjust as needed)
+      const minValue = 0;
+      const maxValue = 72;
+      const range = maxValue - minValue;
+
+      // Create an SVG element for the speedometer
+      const svg = d3.select("#speedometer")
+          .append("g")
+          .attr("transform", "translate(150,150)");
+
+      // Create a scale for mapping data values to angles (0 to 180 degrees)
+      const angleScale = d3.scaleLinear()
+          .domain([minValue, maxValue])
+          .range([-90, 90]);
+
+      // Create the speedometer arc
+      const arc = d3.arc()
+          .innerRadius(70)
+          .outerRadius(100)
+          .startAngle(d => angleScale(minValue))
+          .endAngle(d => angleScale(d));
+
+      // Draw the background arc
+      svg.append("path")
+          .attr("class", "background")
+          .attr("d", arc(maxValue))
+          .style("fill", "lightgray");
+
+      // Draw the speedometer arc (initially at minValue)
+      const speedometerPath = svg.append("path")
+          .attr("class", "speedometer")
+          .datum(minValue)
+          .attr("d", arc)
+          .style("fill", "steelblue");
+
+      // Function to update the speedometer value
+      function updateSpeedometer(value) {
+          speedometerPath.transition()
+              .duration(1000) // Transition duration in milliseconds
+              .attrTween("d", function(d) {
+                  const interpolate = d3.interpolate(d, value);
+                  return function(t) {
+                      return arc(interpolate(t));
+                  };
+              });
+      }
+
+      // Example: Update the speedometer with a value (0 to 100)
+      updateSpeedometer(75); // Replace with your data value
+
+    </script>
   </body>
 </html>
